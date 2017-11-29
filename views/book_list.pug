@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title 
+
+  ul
+  each book in book_list
+    li 
+      // book.url is a virtual property of the Book model which uses the model instance's _id field to produce a unique URL path.
+      a(href=book.url) #{book.title}
+      | (#{book.author.name})
+
+  else
+    li There are no books.

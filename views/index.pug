@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em LocalLibrary], a very basic Express website developed as a tutorial example on the Mozilla Developer Network.
+
+  h1 Dynamic content 
+  // render传过来error，如果查询数据库出错，则不为null，显示错误消息。否则为null，显示数据。
+  if error 
+    p Error getting dynamic content.
+  else 
+    p The library has the following record counts:
+    
+    ul 
+      // 这里使用 !{} 是因为值是计算出来的，如果是用户输入则必须转义。
+      li #[strong Books:] !{data.book_count}
+      li #[strong Copies] !{data.book_instance_count}
+      li #[strong Copies available] !{data.book_instance_avaible_count}
+      li #[strong Authors:] !{data.author_count}
+      li #[strong Genres:] !{data.genre_count}
