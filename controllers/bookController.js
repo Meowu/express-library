@@ -262,7 +262,7 @@ exports.book_update_post = function(req, res) {
             if (err) { return next(err); }
             
             // Mark our selected genres as checked
-            for (i = 0; i < results.genres.length; i++) {
+            for (let i = 0; i < results.genres.length; i++) {
                 if (book.genre.indexOf(results.genres[i]._id) > -1) {
                     results.genres[i].checked='true';
                 }

@@ -18,6 +18,18 @@ AuthorSchema
 })
 
 AuthorSchema
+.virtual('birth_field')
+.get(function() {
+  return this.date_of_birth ? moment(this.date_of_birth).format('YYYY-MM-DD') : ''
+})
+
+AuthorSchema
+.virtual('death_field')
+.get(function() {
+  return this.date_of_death ? moment(this.date_of_death).format('YYYY-MM-DD') : ''
+})
+
+AuthorSchema
 .virtual('birthday_formatted')
 .get(function () {
   return this.date_of_birth ? moment(this.date_of_birth).format('MMMM Do, YYYY'): ''

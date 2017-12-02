@@ -78,10 +78,11 @@ exports.genre_delete_get = function(req, res, next) {
           Genre.findById(req.params.id).exec(cb)
       },
       books: function(cb) {
-          Genre.find({'genre': req.params.id}).exec(cb)
+          Book.find({'genre': req.params.id}).exec(cb)
       }
   }, function(err, results) {
       if (err) return next(err)
+      console.log(results)
       res.render('genre_delete', {title: 'Delete Genre', genre: results.genre, books: results.books})
   })
 };
@@ -113,10 +114,35 @@ exports.genre_delete_post = function(req, res, next) {
 
 // Display Genre update form on GET
 exports.genre_update_get = function(req, res, next) {
-    res.render('genre_form', { title: 'Create Genre'})
+    req.sanitize('id').escape()
+    req.sanitize('id').trim()
+
+    Genre.findById(req.params.id, function(err, result) {
+        if (err) return next(err)
+        res.render('genre_form', { title: 'update Genre', genre: result})
+    })
 };
 
 // Handle Genre update on POST
 exports.genre_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre update POST');
+    req.checkBody('name', 'Genre name are required.').notEmpty()
+    
+    req.sanitize('id').trim()
+    req.sanitize('id').escape()
+
+    const errors = req.validationErrors()
+
+    const genre = new Genre({
+        name: req.body.name,
+        _id: req.params.id
+    })
+    if (errors) {
+        res.render('genre_form', {title: 'Update Genre', genre: genre, errors: errors})
+    } else {
+        Genre.findByIdAndUpdate(req.params.id, genre, {}, function(err, newgenre) {
+            if (err) return next(err)
+            res.redirect(newgenre.url)
+        })
+    }
+    // res.send('NOT IMPLEMENTED: Genre update POST');
 };

@@ -46,7 +46,7 @@ exports.author_create_post = function(req, res, next) {
      req.checkBody('date_of_birth', 'Invalid date').optional({ checkFalsy: true })
      // the checkFalsy flag means that we'll accept either an empty string or null as an empty value.
      req.checkBody('date_of_death', 'Invalid date').optional({ checkFalsy: true })
-     
+
      req.sanitize('first_name').escape();
      req.sanitize('family_name').escape();
      req.sanitize('first_name').trim();     
@@ -130,10 +130,50 @@ exports.author_delete_post = function(req, res) {
 
 // Display Author update form on GET
 exports.author_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author update GET');
+    req.sanitize('id').escape()
+    req.sanitize('id').trim()
+
+    Author.findById(req.params.id, function(err, author) {
+        if (err) return next(err)
+        res.render('author_form', {title: 'Update Author', author: author})
+        // console.log(author);
+    })
 };
 
 // Handle Author update on POST
 exports.author_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author update POST');
+    req.checkBody('family_name', 'Family name are required.').notEmpty()
+    req.checkBody('family_name', 'Family name are required to be alphanumeric text.').isAlpha()
+    req.checkBody('first_name', 'First name are required.').notEmpty()
+    req.checkBody('first_name', 'First name are required to be alphanumeric text.').isAlpha()
+
+    req.checkBody('date_of_birth', 'Invalid Date').optional({checkFalsy: true})
+    req.checkBody('date_of_death', 'Invalid Date').optional({checkFalsy: true})
+    
+    req.sanitize('family_name').trim()
+    req.sanitize('family_name').escape()
+    req.sanitize('first_name').trim()
+    req.sanitize('first_name').escape()
+
+    req.sanitize('date_of_birth').toDate()
+    req.sanitize('date_of_death').toDate()
+
+    const author = new Author({
+        _id: req.params.id,
+        family_name: req.body.family_name,
+        first_name: req.body.first_name,
+        date_of_birth: req.body.date_of_birth,
+        date_of_death: req.body.date_of_death
+    })
+    console.log(author)
+    const errors = req.validationErrors()
+    
+    if (errors) {
+        res.render('author_form', {title: 'Update Author', author: author, errors: errors})
+    } else {
+        Author.findByIdAndUpdate(req.params.id, author, {}, function(err, newauthor) {
+            if (err) return next(err)
+            res.redirect(newauthor.url)
+        })
+    }
 };
