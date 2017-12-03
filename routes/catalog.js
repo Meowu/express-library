@@ -114,4 +114,20 @@ router.get('/bookinstance/:id', book_instance_controller.bookinstance_detail);
 /* GET request for list of all BookInstance. */
 router.get('/bookinstances', book_instance_controller.bookinstance_list);
 
+
+/*Get reuest for signup */
+router.get('/signup', user_controller.user_signup_get)
+
+/*Get request for signin */
+router.get('/signin', user_controller.user_signin)
+
+/*Post request for sginup */
+router.post('/signup', user_controller.user_signup_post)
+
+/*Get request for user home page */
+router.get('/home', user_controller.user_profile_get)
+
+/*Post request for user home page */
+router.post('/home/update', user_controller.user_profile_update)
+
 module.exports = router;
