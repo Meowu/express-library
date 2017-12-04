@@ -26,7 +26,7 @@ function scan(host, start, end, callback) {
     });
   }
 }
-scan("www.bilibili.tv", 1, 65535, function(result) {
+scan("127.0.0.1", 1, 65535, function(result) {
   for (var i = 0; i < result.length; i++) {
     console.log("端口:" + result[i]);
   }
