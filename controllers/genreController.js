@@ -2,6 +2,7 @@ var Genre = require('../models/genre');
 const Book = require('../models/book');
 const async = require('async');
 const mongoose = require('mongoose')
+
 // Display list of all Genre
 exports.genre_list = function(req, res) {
   Genre.find()

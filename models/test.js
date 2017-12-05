@@ -1,7 +1,11 @@
 
 const mongoose = require('mongoose')
+const path = require('path')
 
 const mongoDB = 'mongodb://127.0.0.1/db'
+
+const current_path = path.resolve(__dirname, '../public/images/avatars')
+console.log(current_path);
 
 mongoose.connect(mongoDB, {
   useMongoClient: true

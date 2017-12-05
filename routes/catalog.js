@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const path = require('path')
+const multer = require('multer')
+const upload = multer({dest: path.resolve(__dirname, './public/images/avatars')})
 
 // Require controller modules
 var book_controller = require('../controllers/bookController');
@@ -7,6 +10,7 @@ var author_controller = require('../controllers/authorController');
 var genre_controller = require('../controllers/genreController');
 var book_instance_controller = require('../controllers/bookinstanceController');
 const user_controller = require('../controllers/userController')
+// const user_controllers = require('../controllers/userController')
 
 /// BOOK ROUTES ///
 
@@ -72,7 +76,7 @@ router.get('/genre/create', genre_controller.genre_create_get);
 router.post('/genre/create', genre_controller.genre_create_post);
 
 /* GET request to delete Genre. */
-router.get('/genre/:id/delete', genre_controller.genre_delete_get);
+router.get('/genre/:id/delete', user_controller.user_vertify,  genre_controller.genre_delete_get);
 
 // POST request to delete Genre
 router.post('/genre/:id/delete', genre_controller.genre_delete_post);

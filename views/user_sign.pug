@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1=title
+  form(method="POST" action="" enctype='multipart/form-data')
+    if signup
+      .form-group
+        label(for='email-input') Email address
+        input.form-control#email-input(type='email' aria-describedby='emailHelp' name='email' placeholder="Enter email here...")
+        small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
+      .form-group
+        label(for='username-input') Username
+        input.form-control#username-input(type='text' placeholder="Enter username here..." name='username')
+      .form-group
+        label(for='password') Password
+        input.form-control#password(type='password' placeholder="Enter password here..." name='password')
+      .form-group
+        label(for='password-again') Password
+        input.form-control#password-again(type='password' placeholder="Enter password again" name='password_again')
+      button.btn.btn-primary Signup
+      .toggle(style='color:#ccc;font-size:13px') Already had an account?
+        button.btn.btn-secondary Signin
+    else 
+      .form-group
+        label(for='username-input') Username
+        input.form-control#username-input(type='text' placeholder="Enter username here..." name='username')
+      .form-group
+        label(for='password') Password
+        input.form-control#password(type='password' placeholder="Enter password here..." name='password')
+      button.btn.btn-primary Signin
