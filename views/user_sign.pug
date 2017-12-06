@@ -17,9 +17,10 @@ block content
       .form-group
         label(for='password-again') Password
         input.form-control#password-again(type='password' placeholder="Enter password again" name='password_again')
+      .form-group
+        label(for='file-avatar') 上传头像
+        input.form-control-file#file-avatar(type='file')
       button.btn.btn-primary Signup
-      .toggle(style='color:#ccc;font-size:13px') Already had an account?
-        button.btn.btn-secondary Signin
     else 
       .form-group
         label(for='username-input') Username
@@ -28,3 +29,15 @@ block content
         label(for='password') Password
         input.form-control#password(type='password' placeholder="Enter password here..." name='password')
       button.btn.btn-primary Signin
+
+  if signup
+    .toggle(style='margin-top:20px;') 
+      span(style='color:#ccc;font-size:13px') Already had an account? #[br]
+      a(href='/catalog/signin')
+        button.btn.btn-outline-secondary(type="button") Signin
+  else
+    .toggle(style='margin-top:20px;')  
+      span(style='color:#ccc;font-size:13px') Need an account? #[br]
+      a(href='/catalog/signup')
+        button.btn.btn-outline-secondary(type="button") Signup
+        

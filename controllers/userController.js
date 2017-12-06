@@ -17,7 +17,7 @@ exports.user_signin_post = function(req, res ,next) {
 }
 
 exports.user_signup_get = function(req, res, next) {
-
+  res.render('user_sign', {title: 'Signup', signup: true})
 }
 
 exports.user_signup_post = function(req, res, next) {
