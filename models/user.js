@@ -8,12 +8,14 @@
  const Schema = mongoose.Schema
 
  const userSchema = new Schema({
-   username: {type: String, min: 3, max: 16, required: true},
-   passward: {type: String, required: true},
-   avatar: {type: String, required: true},
+  //  _id: {type: Schema.ObjectId},
+   username: {type: String, min: 3, max: 16, required: true, unique: true},
+   password: {type: String, required: true},
+   email: {type: String, required: true,},
+   avatar: {type: String},
    borrows: {type: Number},
    status: {type: String, enum: ['free', 'blocked'], default: 'free'},
    due_books: {type: Number},
- })
+ }, {timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'}})
 
  module.exports = mongoose.model('User', userSchema)

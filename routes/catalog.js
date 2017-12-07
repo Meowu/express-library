@@ -10,12 +10,14 @@ var author_controller = require('../controllers/authorController');
 var genre_controller = require('../controllers/genreController');
 var book_instance_controller = require('../controllers/bookinstanceController');
 const user_controller = require('../controllers/userController')
-// const user_controllers = require('../controllers/userController')
+const user_controllers = require('../controllers/userController')
 
 /// BOOK ROUTES ///
 
 /* GET catalog home page. */
+
 router.get('/', book_controller.index);
+router.all('*', user_controller.user_vertify)
 
 /* GET request for creating a Book. NOTE This must come before routes that display Book (uses id) */
 router.get('/book/create', book_controller.book_create_get);
@@ -76,7 +78,7 @@ router.get('/genre/create', genre_controller.genre_create_get);
 router.post('/genre/create', genre_controller.genre_create_post);
 
 /* GET request to delete Genre. */
-router.get('/genre/:id/delete', user_controller.user_vertify,  genre_controller.genre_delete_get);
+router.get('/genre/:id/delete', genre_controller.genre_delete_get);
 
 // POST request to delete Genre
 router.post('/genre/:id/delete', genre_controller.genre_delete_post);
@@ -124,7 +126,7 @@ router.get('/bookinstances', book_instance_controller.bookinstance_list);
 router.get('/signup', user_controller.user_signup_get)
 
 /*Post request for sginup */
-router.post('/signup', user_controller.user_signup_post)
+router.post('/signup', upload.single('avatar'), user_controller.user_signup_post)
 
 /*Get request for signin */
 router.get('/signin', user_controller.user_signin_get)

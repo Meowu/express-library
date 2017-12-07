@@ -2,42 +2,47 @@ extends layout
 
 block content
   h1=title
-  form(method="POST" action="" enctype='multipart/form-data')
     if signup
-      .form-group
-        label(for='email-input') Email address
-        input.form-control#email-input(type='email' aria-describedby='emailHelp' name='email' placeholder="Enter email here...")
-        small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
-      .form-group
-        label(for='username-input') Username
-        input.form-control#username-input(type='text' placeholder="Enter username here..." name='username')
-      .form-group
-        label(for='password') Password
-        input.form-control#password(type='password' placeholder="Enter password here..." name='password')
-      .form-group
-        label(for='password-again') Password
-        input.form-control#password-again(type='password' placeholder="Enter password again" name='password_again')
-      .form-group
-        label(for='file-avatar') 上传头像
-        input.form-control-file#file-avatar(type='file')
-      button.btn.btn-primary Signup
+      form(method="POST" action="" enctype='multipart/form-data')
+        .form-group
+          label(for='email-input') Email address
+          input.form-control#email-input(type='email' aria-describedby='emailHelp' name='email' placeholder="Enter email here...")
+          small#emailHelp.form-text.text-muted We'll never share your email with anyone else.
+        .form-group
+          label(for='username-input') Username
+          input.form-control#username-input(type='text' placeholder="Enter username here..." name='username')
+        .form-group
+          label(for='password') Password
+          input.form-control#password(type='password' placeholder="Enter password here..." name='password')
+        .form-group
+          label(for='password-again') Password
+          input.form-control#password-again(type='password' placeholder="Enter password again" name='password_again')
+        .form-group
+          label(for='file-avatar') 上传头像
+          input.form-control-file#file-avatar(type='file' name='avatar')
+        button.btn.btn-primary Signup
     else 
-      .form-group
-        label(for='username-input') Username
-        input.form-control#username-input(type='text' placeholder="Enter username here..." name='username')
-      .form-group
-        label(for='password') Password
-        input.form-control#password(type='password' placeholder="Enter password here..." name='password')
-      button.btn.btn-primary Signin
+      form(method="POST" action="")
+        .form-group
+          label(for='username-input') Username
+          input.form-control#username-input(type='text' placeholder="Enter username here..." name='username' value=`${username ? username : ''}`)
+        .form-group
+          label(for='password') Password
+          input.form-control#password(type='password' placeholder="Enter password here..." name='password')
+        button.btn.btn-primary Signin
 
   if signup
     .toggle(style='margin-top:20px;') 
       span(style='color:#ccc;font-size:13px') Already had an account? #[br]
-      a(href='/catalog/signin')
+      a(href='/users/signin')
         button.btn.btn-outline-secondary(type="button") Signin
   else
     .toggle(style='margin-top:20px;')  
       span(style='color:#ccc;font-size:13px') Need an account? #[br]
-      a(href='/catalog/signup')
+      a(href='/users/signup')
         button.btn.btn-outline-secondary(type="button") Signup
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
         

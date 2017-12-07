@@ -11,6 +11,9 @@ const expressValidator = require('express-validator')
 var index = require('./routes/index');
 var users = require('./routes/users');
 const catalog = require('./routes/catalog');
+const user_controller = require('./controllers/userController')
+var book_controller = require('./controllers/bookController');
+const md5 = require('md5')
 
 var app = express();
 
@@ -22,6 +25,10 @@ mongoose.connect(mongoDB, {
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connect error.'))
 
+// const str1 = 'meowu668329'
+// const str2 = 'meowu668329'
+// console.log(md5(str1));
+// console.log(md5(str1) === md5(str2));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -48,6 +55,7 @@ app.use(cookieParser());
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// app.use('/', index);
 app.use('/', index);
 app.use('/users', users);
 app.use('/catalog', catalog);
