@@ -33,10 +33,15 @@ exports.user_signin_post = function(req, res ,next) {
         res.render('user_sign', {title: 'Signin', signin: true, username: req.body.username, errors: [{msg: '该用户不存在！'}]} )
       } else {
         const { password }= req.body
-        if (!(md5(password) === md5(result.password))) {
+        console.log(md5(password+''));
+        console.log(result.password);
+        if (md5(password+'') !== result.password) {
           res.render('user_sign', {title: 'Signin', signin: true, username: req.body.username, errors: [{msg: '密码错误'}]} )
         } else {
-          res.send('Login.')
+          // res.send('Login.')
+          // delete req.body.password
+          req.session.user = req.body.username
+          res.redirect('/')
         }
       }
       // res.send('Logged in successfully.')

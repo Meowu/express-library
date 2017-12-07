@@ -34,6 +34,10 @@ html(lang='en')
                 a(href='/catalog/book/create') Create new book
               li 
                 a(href='/catalog/bookinstance/create') Create new book instance (copy)
-                
+            .form-sign(style='margin-top:200px;')
+              a.user-signin(href='/users/signin' style='margin-right:15px;')  
+                button(type="button" class="btn btn-info") 登录
+              a.user-signin(href='/users/signup')
+                button(type="button" class="btn btn-light") 注册
         div(class='col-sm-10')
           block content
