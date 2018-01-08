@@ -97,7 +97,7 @@ exports.genre_delete_post = function(req, res, next) {
             Genre.findById(req.body.genreid).exec(cb)
         },
         books: function(cb) {
-            Genre.find({'genre': req.body.genreid}).exec(cb)
+            Book.find({'genre': req.body.genreid}).exec(cb)
         }
     }, function(err, results) {
         if (err) return next(err)
