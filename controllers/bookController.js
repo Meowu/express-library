@@ -48,11 +48,11 @@ exports.book_detail = function(req, res, next) {
       .exec(cb)
     },
     book_instance: function(cb) {
-
-      BookInstance.find({ 'book': req.params.id })
-    .exec(cb)
+        BookInstance.find({ 'book': req.params.id })
+        .exec(cb)
     }
-  }, function(err, results) {
+}, function(err, results) {
+    console.log(results.book);
     if (err) { return next(err)}
     res.render('book_detail', { title: 'Title', book: results.book, book_instance: results.book_instance})
   })
@@ -77,6 +77,7 @@ exports.book_create_get = function(req, res) {
 
 // Handle book create on POST
 exports.book_create_post = function(req, res) {
+    console.log(req.body);
   req.checkBody('title', 'Title must not be empty.').notEmpty();
   req.checkBody('author', 'Author must not be empty').notEmpty();
   req.checkBody('summary', 'Summary must not be empty').notEmpty();
@@ -90,17 +91,17 @@ exports.book_create_post = function(req, res) {
   req.sanitize('author').trim();
   req.sanitize('summary').trim();
   req.sanitize('isbn').trim();
-  req.sanitize('genre').escape();
+//   req.sanitize('genre').escape();
   
+  console.log('Body: ', req.body);
   var book = new Book({
       title: req.body.title, 
       author: req.body.author, 
       summary: req.body.summary,
       isbn: req.body.isbn,
-      genre: (typeof req.body.genre==='undefined') ? [] : req.body.genre.split(",")
+      genre: (typeof req.body.genre==='undefined') ? [] : req.body.genre
   });
-     
-  console.log('BOOK: ' + book);
+  console.log('BOOK: ',  book);
   
   var errors = req.validationErrors();
   if (errors) {
